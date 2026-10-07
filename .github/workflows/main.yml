@@ -10,10 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Extract project
-        run: unzip -q bubble-burst-odyssey-android-ready.zip -d project
+      - name: Extract Android project
+        run: |
+          unzip -q bubble-burst-odyssey-android-ready.zip -d project
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -21,14 +23,27 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Build
+      - name: Build web game
         run: |
-          chmod +x project/**/gradlew
-          cd project
+          cd project/bubble-burst-odyssey-android/web-source
+          npm install
+          npm run build
+          rm -rf ../app/src/main/assets/www/*
+          cp -R dist/. ../app/src/main/assets/www/
+
+      - name: Create Gradle wrapper
+        run: |
+          cd project/bubble-burst-odyssey-android
+          gradle wrapper --gradle-version 8.11.1
+
+      - name: Build Android APK
+        run: |
+          cd project/bubble-burst-odyssey-android
+          chmod +x gradlew
           ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: bubble-burst-odyssey-apk
-          path: project/**/build/outputs/apk/debug/*.apk
+          path: project/bubble-burst-odyssey-android/app/build/outputs/apk/debug/*.apk
