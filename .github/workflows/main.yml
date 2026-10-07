@@ -1,49 +1,56 @@
-name: Build APK
+I have uploaded a Vite + React + TypeScript web game project named "Bubble Burst Odyssey".
 
-on:
-  workflow_dispatch:
-  push:
-    branches: [ main ]
+Your task is to convert this project into a fully working Android APK.
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+Requirements:
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+1. Inspect the entire uploaded project first.
+2. Do NOT remove or break any existing game functionality, UI, graphics, sounds, animations, scoring, or gameplay.
+3. Build the React/Vite project into production files using:
+   npm install --legacy-peer-deps
+   npm run build
+4. Create a native Android WebView wrapper around the generated web build.
+5. Use a standard Gradle Android project that can build with GitHub Actions.
+6. Include:
+   - AndroidManifest.xml
+   - Gradle files
+   - Gradle wrapper
+   - MainActivity
+   - WebView configuration
+   - Internet permission if required
+   - local assets loading
+7. The final app must work offline after installation wherever possible.
+8. Make the game fit Android phones properly:
+   - portrait/landscape support as appropriate
+   - fullscreen game view
+   - no unnecessary browser address bar
+   - responsive screen
+   - Android back button should work sensibly
+9. Set the application name to:
+   Bubble Burst Odyssey
+10. Use package name:
+   com.bubbleburst.odyssey
+11. Create a debug APK and make sure it actually builds successfully.
+12. Also create a GitHub Actions workflow at:
+   .github/workflows/build-apk.yml
+13. The GitHub Actions workflow must:
+   - checkout the repository
+   - setup Node.js
+   - run npm install --legacy-peer-deps
+   - run npm run build
+   - copy the dist files into the Android WebView assets
+   - setup Java 17
+   - build the Android APK with Gradle
+   - upload the APK as a GitHub Actions artifact
+14. Do not depend on Android Studio or Android IDE on the user's phone.
+15. Make the project ready to build entirely through GitHub Actions.
+16. Verify all paths carefully. Do not assume that gradlew already exists; include a valid Gradle wrapper in the generated Android project.
+17. Fix any dependency conflicts necessary for the build.
+18. At the end, provide:
+   - the complete Android-ready project
+   - the GitHub Actions workflow
+   - exact steps for uploading it to GitHub
+   - exact steps for downloading the generated APK from GitHub Actions.
 
-      - name: Extract Android project
-        run: |
-          unzip -q bubble-burst-odyssey-android-ready.zip -d project
-
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Build web game
-        run: |
-          cd project/bubble-burst-odyssey-android/web-source
-          npm install
-          npm run build
-          rm -rf ../app/src/main/assets/www/*
-          cp -R dist/. ../app/src/main/assets/www/
-
-      - name: Create Gradle wrapper
-        run: |
-          cd project/bubble-burst-odyssey-android
-          gradle wrapper --gradle-version 8.11.1
-
-      - name: Build Android APK
-        run: |
-          cd project/bubble-burst-odyssey-android
-          chmod +x gradlew
-          ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: bubble-burst-odyssey-apk
-          path: project/bubble-burst-odyssey-android/app/build/outputs/apk/debug/*.apk
+Most important:
+DO NOT just explain how to do it. Actually modify/create the required project files and make the project buildable.
