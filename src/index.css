@@ -1,0 +1,190 @@
+@import "tailwindcss";
+
+@layer base {
+  html,
+  body {
+    overscroll-behavior: none;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+  }
+}
+
+/* Android safe-area insets */
+.safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Subtle level card entry & celebration pop animation */
+@keyframes levelPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.92) translateY(6px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.02) translateY(-1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes newlyUnlockedGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4), 0 0 16px rgba(56, 189, 248, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 0 1.5px rgba(56, 189, 248, 0.8), 0 0 24px rgba(56, 189, 248, 0.45);
+  }
+}
+
+.animate-level-pop {
+  animation: levelPopIn 0.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.animate-newly-unlocked-glow {
+  animation: newlyUnlockedGlow 2s ease-in-out infinite;
+}
+
+/* Celebration sparkle & particle float animations */
+@keyframes sparkleFloat {
+  0% {
+    transform: translateY(0px) scale(0.6) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-16px) scale(1.15) rotate(45deg);
+  }
+  100% {
+    transform: translateY(-48px) scale(0) rotate(90deg);
+    opacity: 0;
+  }
+}
+
+@keyframes trophyRay {
+  0% {
+    transform: rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(360deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes newlyUnlockedPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.88) translateY(8px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.05) translateY(-2px);
+  }
+  85% {
+    transform: scale(0.98) translateY(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-newly-unlocked-pop {
+  animation: newlyUnlockedPop 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Floating Combo Multiplier Animation Above Game Canvas */
+@keyframes comboFloat {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.85);
+  }
+  18% {
+    opacity: 1;
+    transform: translateY(-4px) scale(1.12);
+  }
+  32% {
+    transform: translateY(0px) scale(1);
+  }
+  75% {
+    opacity: 1;
+    transform: translateY(-8px) scale(1.02);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-26px) scale(0.92);
+  }
+}
+
+.animate-combo-float {
+  animation: comboFloat 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes comboGlowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 0.6));
+  }
+  50% {
+    filter: drop-shadow(0 0 22px rgba(249, 115, 22, 0.9));
+  }
+}
+
+.animate-combo-glow {
+  animation: comboGlowPulse 1s ease-in-out infinite;
+}
+
+.animate-trophy-rays {
+  animation: trophyRay 12s linear infinite;
+}
+
+@keyframes pinBob {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-pin-bob {
+  animation: pinBob 1.6s ease-in-out infinite;
+}
+
+/* Roadmap Stage Nodes Mount Transition Animation */
+@keyframes roadmapNodeMount {
+  0% {
+    opacity: 0;
+    transform: scale(0.65) translateY(12px);
+    filter: brightness(1.3);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1.14) translateY(-3px);
+    filter: brightness(1.18);
+  }
+  75% {
+    transform: scale(0.96) translateY(1px);
+    filter: brightness(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+.animate-roadmap-node-mount {
+  animation: roadmapNodeMount 0.55s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
